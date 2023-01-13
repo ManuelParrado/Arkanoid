@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -15,43 +17,68 @@ import org.rmrsoft.spaceInvaders.MiCanvas;
 public class Arkanoid {
 
 	private static int FPS = 60;
-	private static JFrame ventana = null;
-	private static List<Actor> actores = new ArrayList<Actor>();
-	private static MiCanvas canvas = null;
+	private JFrame ventana = null;
+	private List<Actor> actores = new ArrayList<Actor>();
+	private MiCanvas canvas = null;
+	Nave nave = null;
+
 	
-	public static void main(String[] args) {
-		
-		JFrame ventana = new JFrame("Arkanoid");
+	private static Arkanoid instance = null;
+	
+	public static Arkanoid getInstance () {
+		if (instance == null) { // Si no está inicializada, se inicializa
+			instance = new Arkanoid();
+		}
+		return instance;
+	}
+	
+	public Arkanoid () {
+		ventana = new JFrame("Space Invaders");
 		ventana.setBounds(0, 0, 500, 650);
-		
+
+		// Para colocar objetos sobre la ventana debo asignarle un "layout" (plantilla) al panel principal de la ventana
 		ventana.getContentPane().setLayout(new BorderLayout());
 		
-		
+		// Creo una lista de actores que intervendrá en el juego.
 		actores = creaActores();
 		
-		
+		// Creo y agrego un canvas, es un objeto que permitirá dibujar sobre él
 		canvas = new MiCanvas(actores);
+		
+		canvas.addMouseMotionListener(new MouseAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				super.mouseMoved(e);
+				nave.mover(e.getX(), e.getY());
+			}			
+		});
+		
 		ventana.getContentPane().add(canvas, BorderLayout.CENTER);
-		
+		// Consigo que la ventana no se redibuje por los eventos de Windows
 		ventana.setIgnoreRepaint(true);
-		
+		// Hago que la ventana sea visible
 		ventana.setVisible(true);
 		
-		
+		// Control del evento de cierre de ventana
 		ventana.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		ventana.addWindowListener(new WindowAdapter() {
+			
 			@Override
 			public void windowClosing(WindowEvent e) {
 				cerrarAplicacion();
 			}
 		});
-				
-				juego();
+
+	}
+
 	
+	public static void main(String[] args) {
+		
+		Arkanoid.getInstance().juego();
 
 	}
 	
-	private static void cerrarAplicacion() {
+	private void cerrarAplicacion() {
 		String [] opciones ={"Aceptar","Cancelar"};
 		int eleccion = JOptionPane.showOptionDialog(ventana,"¿Desea cerrar la aplicación?","Salir de la aplicación",
 		JOptionPane.YES_NO_OPTION,
@@ -61,7 +88,7 @@ public class Arkanoid {
 		}
 	}
 	
-	public static void juego () {
+	public void juego () {
 		int millisPorCadaFrame = 1000 / FPS;
 		do {
 			
@@ -91,7 +118,7 @@ public class Arkanoid {
 	
 	
 	
-	public static List<Actor> creaActores () {
+	public List<Actor> creaActores () {
 		List<Actor> actores = new ArrayList<Actor>();
 		
 		//Creo la pelota
@@ -110,16 +137,16 @@ public class Arkanoid {
 			Color color = null;
 			 
 			if (i == 0) {
-				color = Color.cyan;
+				color = Color.CYAN;
 			} else if (i == 1) {
-				color = Color.green;
+				color = Color.GREEN;
 			} else if (i == 2) {
-				color = Color.magenta;
+				color = Color.MAGENTA;
 			} else if (i == 3) {
-				color = Color.pink;
+				color = Color.PINK;
 			} else if (i == 4) {
-				color = Color.yellow;
-			} else if (i == 5) {
+				color = Color.YELLOW;
+			} else {
 				color = Color.RED;
 			}
 			
@@ -132,11 +159,15 @@ public class Arkanoid {
 			y += 20;
 		}
 		
-		Nave nave = new Nave(220, 500, 10, 10, null);
+		nave = new Nave(220, 500, 10, 10, null);
 		actores.add(nave);
 		
 		// Devuelvo la lista con todos los actores del juego
 		return actores;
+	}
+	
+	public MiCanvas getCanvas() {
+		return canvas;
 	}
 	
 	

@@ -75,14 +75,14 @@ public class Pelota extends Actor{
 	// El monstruo se mueve de manera horizontal, en cada FPS
 			this.x += this.velocidadX;
 			// Si el monstruo abandona la escena por la izquierda o la derecha, rebota
-			if (this.x < 0 || this.x > 800) {
+			if (this.x < 0 || (this.x + this.ancho) > Arkanoid.getInstance().getCanvas().getWidth()) {
 				this.velocidadX = -this.velocidadX;
 			}
 			
 			// Copiamos el esquema anterior para el movimiento vertical
 			this.y += this.velocidadY;
 			// Si el monstruo abandona la escena por la izquierda o la derecha, rebota
-			if (this.y < 0 || this.y > 600) {
+			if (this.y < 0 || (this.y + this.alto) > Arkanoid.getInstance().getCanvas().getHeight()) {
 				this.velocidadY = -this.velocidadY;
 			}
 		
