@@ -3,7 +3,7 @@ import java.awt.Graphics;
 public abstract class Actor {
 	
 	protected int x,y;
-	protected int ancho = 40, alto = 15;
+	protected int ancho, alto;
 	protected String img;
 	
 	/**

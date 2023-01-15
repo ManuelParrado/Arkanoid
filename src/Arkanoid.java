@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -49,8 +51,22 @@ public class Arkanoid {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				super.mouseMoved(e);
-				nave.mover(e.getX(), e.getY());
+				nave.mover(e.getX());
 			}			
+		});
+		
+		canvas.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				super.keyPressed(e);
+				nave.keyPressed(e);
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				super.keyReleased(e);
+				nave.keyReleased(e);
+			}
 		});
 		
 		ventana.getContentPane().add(canvas, BorderLayout.CENTER);
@@ -58,6 +74,8 @@ public class Arkanoid {
 		ventana.setIgnoreRepaint(true);
 		// Hago que la ventana sea visible
 		ventana.setVisible(true);
+		
+		canvas.requestFocus();
 		
 		// Control del evento de cierre de ventana
 		ventana.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -159,7 +177,7 @@ public class Arkanoid {
 			y += 20;
 		}
 		
-		nave = new Nave(220, 500, 10, 10, null);
+		nave = new Nave(220, 500, 10, 60, null);
 		actores.add(nave);
 		
 		// Devuelvo la lista con todos los actores del juego
