@@ -113,7 +113,7 @@ public class Arkanoid {
 			long millisAntesDeProcesarEscena = new Date().getTime();
 			
 			
-			canvas.repaint();
+			canvas.pintaEscena();
 			
 			
 			for (Actor a : actores) {
