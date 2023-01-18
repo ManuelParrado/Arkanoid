@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -13,9 +14,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.rmrsoft.spaceInvaders.Actor;
-import org.rmrsoft.spaceInvaders.MiCanvas;
-
 public class Arkanoid {
 
 	private static int FPS = 60;
@@ -23,6 +21,9 @@ public class Arkanoid {
 	private List<Actor> actores = new ArrayList<Actor>();
 	private MiCanvas canvas = null;
 	Nave nave = null;
+	Ladrillo ladrillos = null;
+	Pelota pelota = null;
+	private List<Actor> actoresParaEliminar = new ArrayList<Actor>();
 
 	
 	private static Arkanoid instance = null;
@@ -120,6 +121,9 @@ public class Arkanoid {
 				a.actua();
 			}
 			
+			detectaColisiones();
+			
+			actualizaActores();
 			
 			long millisDespuesDeProcesarEscena = new Date().getTime();
 			int millisDeProcesamientoDeEscena = (int) (millisDespuesDeProcesarEscena - millisAntesDeProcesarEscena);
@@ -140,7 +144,9 @@ public class Arkanoid {
 		List<Actor> actores = new ArrayList<Actor>();
 		
 		//Creo la pelota
-		Pelota pelota = new Pelota(240, 325, 10, 10, null);
+		pelota = new Pelota(240, 325, null, 10, 10);
+		pelota.setAlto(10);
+		pelota.setAncho(10);
 		actores.add(pelota);
 		
 		int x = 30;
@@ -169,7 +175,10 @@ public class Arkanoid {
 			}
 			
 			for (int j = 0; j < 12; j++) {
-				Ladrillo ladrillos = new Ladrillo(x, y, 35, 15, null, color);
+				ladrillos = new Ladrillo(x, y, null, 15, 30);
+				ladrillos.setColor(color);
+				ladrillos.setAlto(15);
+				ladrillos.setAncho(30);
 				x = x + ladrillos.getEspaciado();
 				actores.add(ladrillos);
 				x += 33;
@@ -177,11 +186,46 @@ public class Arkanoid {
 			y += 20;
 		}
 		
-		nave = new Nave(220, 500, 10, 60, null);
+		nave = new Nave(220, 500, null, 60, 10);
 		actores.add(nave);
 		
 		// Devuelvo la lista con todos los actores del juego
 		return actores;
+	}
+	
+	private void detectaColisiones() {
+		
+		
+		Actor actor1 = pelota;
+			// Creo un rectángulo para este actor.
+			Rectangle rect1 = new Rectangle(actor1.getX(), actor1.getY(), actor1.getAncho(), actor1.getAlto());
+			// Compruebo un actor con cualquier otro actor
+			for (Actor actor2 : this.actores) {
+				// Evito comparar un actor consigo mismo, ya que eso siempre provocaría una colisión y no tiene sentido
+				if (!actor1.equals(actor2)) {
+					// Formo el rectángulo del actor 2
+					Rectangle rect2 = new Rectangle(actor2.getX(), actor2.getY(), actor2.getAncho(), actor2.getAlto());
+					// Si los dos rectángulos tienen alguna intersección, notifico una colisión en los dos actores
+					if (rect1.intersects(rect2)) {
+						actor1.colisionaCon(actor2); // El actor 1 colisiona con el actor 2
+						actor2.colisionaCon(actor1); // El actor 2 colisiona con el actor 1
+						break;
+					}
+				}
+			}
+		}
+	
+	private void actualizaActores () {
+		
+		// Elimino los actores que se deben eliminar
+		for (Actor a : this.actoresParaEliminar) {
+			this.actores.remove(a);
+		}
+		this.actoresParaEliminar.clear(); // Limpio la lista de actores a eliminar, ya los he eliminado
+	}
+	
+	public void eliminaActor (Actor a) {
+		this.actoresParaEliminar.add(a);
 	}
 	
 	public MiCanvas getCanvas() {

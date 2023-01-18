@@ -17,21 +17,65 @@ public class Nave extends Actor{
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	/**
 	 * @param x
 	 * @param y
+	 * @param img
 	 * @param ancho
 	 * @param alto
-	 * @param img
 	 */
-	public Nave(int x, int y, int ancho, int alto, String img) {
-		super(x, y, ancho, alto, img);
+	public Nave(int x, int y, String img, int ancho, int alto) {
+		super(x, y, img, ancho, alto);
 		// TODO Auto-generated constructor stub
+	}
+
+
+	/**
+	 * @param izquierda
+	 * @param derecha
+	 * @param ancho
+	 * @param alto
+	 */
+	public Nave(boolean izquierda, boolean derecha, int ancho, int alto) {
+		super();
+		this.izquierda = izquierda;
+		this.derecha = derecha;
+		this.ancho = ancho;
+		this.alto = alto;
+	}
+
+	/**
+	 * @return the ancho
+	 */
+	public int getAncho() {
+		return ancho;
+	}
+
+	/**
+	 * @param ancho the ancho to set
+	 */
+	public void setAncho(int ancho) {
+		this.ancho = ancho;
+	}
+
+	/**
+	 * @return the alto
+	 */
+	public int getAlto() {
+		return alto;
+	}
+
+	/**
+	 * @param alto the alto to set
+	 */
+	public void setAlto(int alto) {
+		this.alto = alto;
 	}
 
 	public void paint(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(this.x, this.y, this.alto, this.ancho);
+		g.fillRect(this.x, this.y, this.ancho, this.alto);
 	}
 	
 	@Override
@@ -77,8 +121,5 @@ public class Nave extends Actor{
 			derecha = false; break;
 		}
 	}
-	
-	
-	
 	
 }

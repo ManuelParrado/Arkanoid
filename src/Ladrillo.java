@@ -4,7 +4,22 @@ import java.awt.Graphics;
 public class Ladrillo extends Actor{
 	
 	private Color color;
-	private int espaciado = 4;
+	private int espaciado = 3;
+	private int ancho;
+	private int alto;
+	
+	
+	/**
+	 * @param x
+	 * @param y
+	 * @param img
+	 * @param ancho
+	 * @param alto
+	 */
+	public Ladrillo(int x, int y, String img, int ancho, int alto) {
+		super(x, y, img, ancho, alto);
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * 
@@ -14,19 +29,24 @@ public class Ladrillo extends Actor{
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	/**
-	 * @param x
-	 * @param y
+	 * @param color
+	 * @param espaciado
 	 * @param ancho
-	 * @param largo
-	 * @param img
+	 * @param alto
 	 */
-	public Ladrillo(int x, int y, int ancho, int largo, String img, Color color) {
-		super(x, y, ancho, largo, img);
+	public Ladrillo(Color color, int espaciado, int ancho, int alto) {
+		super();
 		this.color = color;
-		// TODO Auto-generated constructor stub
+		this.espaciado = espaciado;
+		this.ancho = ancho;
+		this.alto = alto;
 	}
 	
+	
+
 	/**
 	 * @return the color
 	 */
@@ -55,15 +75,53 @@ public class Ladrillo extends Actor{
 		this.espaciado = espaciado;
 	}
 
+	/**
+	 * @return the ancho
+	 */
+	public int getAncho() {
+		return ancho;
+	}
+
+	/**
+	 * @param ancho the ancho to set
+	 */
+	public void setAncho(int ancho) {
+		this.ancho = ancho;
+	}
+
+	/**
+	 * @return the alto
+	 */
+	public int getAlto() {
+		return alto;
+	}
+
+	/**
+	 * @param alto the alto to set
+	 */
+	public void setAlto(int alto) {
+		this.alto = alto;
+	}
+
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(color);
 		g.fillRect(this.x, this.y, this.ancho, this.alto);
 	}
 	
+	
 	@Override
 	public void actua() {
 		
+	}
+	
+	@Override
+	public void colisionaCon(Actor a) {
+		super.colisionaCon(a);
+		// Si colisionamos con un player o un disparo, eliminamos al monstruo
+		if (a instanceof Pelota) {
+			Arkanoid.getInstance().eliminaActor(this);
+		}
 	}
 	
 	
