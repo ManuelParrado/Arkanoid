@@ -197,8 +197,8 @@ public class Arkanoid {
 		
 		
 		Actor actor1 = pelota;
-			// Creo un rectángulo para este actor.
-			Rectangle rect1 = new Rectangle(actor1.getX(), actor1.getY(), actor1.getAncho(), actor1.getAlto());
+		// Creo un rectángulo para este actor.
+		Rectangle rect1 = new Rectangle(actor1.getX(), actor1.getY(), actor1.getAncho(), actor1.getAlto());
 			// Compruebo un actor con cualquier otro actor
 			for (Actor actor2 : this.actores) {
 				// Evito comparar un actor consigo mismo, ya que eso siempre provocaría una colisión y no tiene sentido
