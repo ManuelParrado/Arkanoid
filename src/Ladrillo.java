@@ -1,25 +1,16 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 public class Ladrillo extends Actor{
 	
-	private Color color;
 	private int espaciado = 3;
-	private int ancho;
-	private int alto;
+	private static String color[] = new String[] {ImagesCache.IMAGEN_LADRILLO_AMARILLO, ImagesCache.IMAGEN_LADRILLO_CYAN, 
+			ImagesCache.IMAGEN_LADRILLO_MORADO, ImagesCache.IMAGEN_LADRILLO_ROJO, ImagesCache.IMAGEN_LADRILLO_ROSA,
+			ImagesCache.IMAGEN_LADRILLO_VERDE};
 	
 	
-	/**
-	 * @param x
-	 * @param y
-	 * @param img
-	 * @param ancho
-	 * @param alto
-	 */
-	public Ladrillo(int x, int y, String img, int ancho, int alto) {
-		super(x, y, img, ancho, alto);
-		// TODO Auto-generated constructor stub
-	}
 
 	/**
 	 * 
@@ -29,52 +20,18 @@ public class Ladrillo extends Actor{
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	/**
-	 * @param color
-	 * @param espaciado
+	 * @param x
+	 * @param y
+	 * @param img
 	 * @param ancho
 	 * @param alto
 	 */
-	public Ladrillo(Color color, int espaciado, int ancho, int alto) {
-		super();
-		this.color = color;
-		this.espaciado = espaciado;
-		this.ancho = ancho;
-		this.alto = alto;
+	public Ladrillo(int x, int y, int num_color, int ancho, int alto) {
+		super(x, y, ancho, alto, ImagesCache.getInstance().getImagen(color[num_color]));
+		// TODO Auto-generated constructor stub
 	}
 	
-	
-
-	/**
-	 * @return the color
-	 */
-	public Color getColor() {
-		return color;
-	}
-
-	/**
-	 * @param color the color to set
-	 */
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
-	/**
-	 * @return the espaciado
-	 */
-	public int getEspaciado() {
-		return espaciado;
-	}
-
-	/**
-	 * @param espaciado the espaciado to set
-	 */
-	public void setEspaciado(int espaciado) {
-		this.espaciado = espaciado;
-	}
-
 	/**
 	 * @return the ancho
 	 */
@@ -102,14 +59,22 @@ public class Ladrillo extends Actor{
 	public void setAlto(int alto) {
 		this.alto = alto;
 	}
-
-	@Override
-	public void paint(Graphics g) {
-		g.setColor(color);
-		g.fillRect(this.x, this.y, this.ancho, this.alto);
+	
+	
+	/**
+	 * @return the espaciado
+	 */
+	public int getEspaciado() {
+		return espaciado;
 	}
-	
-	
+
+	/**
+	 * @param espaciado the espaciado to set
+	 */
+	public void setEspaciado(int espaciado) {
+		this.espaciado = espaciado;
+	}
+
 	@Override
 	public void actua() {
 		

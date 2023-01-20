@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 public class Nave extends Actor{
 
@@ -25,8 +26,8 @@ public class Nave extends Actor{
 	 * @param ancho
 	 * @param alto
 	 */
-	public Nave(int x, int y, String img, int ancho, int alto) {
-		super(x, y, img, ancho, alto);
+	public Nave(int x, int y, int ancho, int alto) {
+		super(x, y, ancho, alto, ImagesCache.getInstance().getImagen(ImagesCache.IMAGEN_NAVE));
 		// TODO Auto-generated constructor stub
 	}
 
@@ -73,10 +74,6 @@ public class Nave extends Actor{
 		this.alto = alto;
 	}
 
-	public void paint(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(this.x, this.y, this.ancho, this.alto);
-	}
 	
 	@Override
 	public void actua() {

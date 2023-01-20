@@ -1,11 +1,13 @@
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 public abstract class Actor {
 	
 	protected int x,y;
-	protected String img;
+	protected BufferedImage img;
 	protected int ancho;
 	protected int alto;
+	
 	
 	
 	
@@ -26,11 +28,11 @@ public abstract class Actor {
 	 * @param ancho
 	 * @param largo
 	 */
-	public Actor(int x, int y, String img, int ancho, int alto) {
+	public Actor(int x, int y, int ancho, int alto, BufferedImage img) {
 		super();
 		this.x = x;
 		this.y = y;
-		this.img = img;
+		this.setImg(img);
 		this.ancho = ancho;
 		this.alto = alto;
 	}
@@ -40,7 +42,9 @@ public abstract class Actor {
 	public abstract void actua ();
 	
 	
-	public abstract void paint(Graphics g); 
+	public void paint(Graphics g) {
+		g.drawImage(this.img, this.x, this.y, null);
+	}
 	
 	/**
 	 * Método que se podrá sobrescribir en los subtipos para decidir la acción a realizar al colisionar
@@ -82,15 +86,17 @@ public abstract class Actor {
 	/**
 	 * @return the img
 	 */
-	public String getImg() {
+	public BufferedImage getImg() {
 		return img;
 	}
 
 	/**
 	 * @param img the img to set
 	 */
-	public void setImg(String img) {
+	public void setImg(BufferedImage img) {
 		this.img = img;
+		this.ancho = this.img.getWidth();
+		this.alto = this.img.getHeight();
 	}
 
 

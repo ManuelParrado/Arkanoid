@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,7 @@ public class Arkanoid {
 	}
 	
 	public Arkanoid () {
-		ventana = new JFrame("Space Invaders");
+		ventana = new JFrame("Arkanoid");
 		ventana.setBounds(0, 0, 500, 650);
 
 		// Para colocar objetos sobre la ventana debo asignarle un "layout" (plantilla) al panel principal de la ventana
@@ -144,9 +145,7 @@ public class Arkanoid {
 		List<Actor> actores = new ArrayList<Actor>();
 		
 		//Creo la pelota
-		pelota = new Pelota(240, 325, null, 10, 10);
-		pelota.setAlto(10);
-		pelota.setAncho(10);
+		pelota = new Pelota(240, 325, 10, 10);
 		actores.add(pelota);
 		
 		int x = 30;
@@ -158,27 +157,8 @@ public class Arkanoid {
 				x = 30;
 			}
 			
-			Color color = null;
-			 
-			if (i == 0) {
-				color = Color.CYAN;
-			} else if (i == 1) {
-				color = Color.GREEN;
-			} else if (i == 2) {
-				color = Color.MAGENTA;
-			} else if (i == 3) {
-				color = Color.PINK;
-			} else if (i == 4) {
-				color = Color.YELLOW;
-			} else {
-				color = Color.RED;
-			}
-			
 			for (int j = 0; j < 12; j++) {
-				ladrillos = new Ladrillo(x, y, null, 15, 30);
-				ladrillos.setColor(color);
-				ladrillos.setAlto(15);
-				ladrillos.setAncho(30);
+				ladrillos = new Ladrillo(x, y, i, 30, 10);
 				x = x + ladrillos.getEspaciado();
 				actores.add(ladrillos);
 				x += 33;
@@ -186,7 +166,7 @@ public class Arkanoid {
 			y += 20;
 		}
 		
-		nave = new Nave(220, 500, null, 60, 10);
+		nave = new Nave(220, 500, 60, 10);
 		actores.add(nave);
 		
 		// Devuelvo la lista con todos los actores del juego
