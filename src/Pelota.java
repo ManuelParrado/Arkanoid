@@ -21,7 +21,8 @@ public class Pelota extends Actor{
 	 * @param alto
 	 */
 	public Pelota(int x, int y, int ancho, int alto) {
-		super(x, y, ancho, alto, ImagesCache.getInstance().getImagen(ImagesCache.IMAGEN_PELOTA));
+		super(x, y, ancho, alto);
+		this.setSpriteActual(ResourcesCache.getInstance().getImagen(ResourcesCache.IMAGEN_PELOTA));
 	}
 	
 	/**
@@ -77,6 +78,7 @@ public class Pelota extends Actor{
 		super.colisionaCon(a);
 		if (a instanceof Nave || a instanceof Ladrillo) {
 			this.velocidadY = -this.velocidadY;
+			
 		}
 	}
 	

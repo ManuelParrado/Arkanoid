@@ -15,6 +15,8 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.rmrsoft.spaceInvaders.Actor;
+
 public class Arkanoid {
 
 	private static int FPS = 60;
@@ -24,6 +26,8 @@ public class Arkanoid {
 	Nave nave = null;
 	Ladrillo ladrillos = null;
 	Pelota pelota = null;
+	Explosion explosion = null;
+	private List<Actor> actoresParaIncorporar = new ArrayList<Actor>();
 	private List<Actor> actoresParaEliminar = new ArrayList<Actor>();
 
 	
@@ -93,6 +97,8 @@ public class Arkanoid {
 
 	
 	public static void main(String[] args) {
+		
+		ResourcesCache.getInstance().cargarRecursosEnMemoria();
 		
 		Arkanoid.getInstance().juego();
 
@@ -196,6 +202,11 @@ public class Arkanoid {
 		}
 	
 	private void actualizaActores () {
+		// Incorporo los nuevos actores
+		for (Actor a : this.actoresParaIncorporar) {
+			this.actores.add(a);
+		}
+		this.actoresParaIncorporar.clear(); // Limpio la lista de actores a incorporar, ya están incorporados
 		
 		// Elimino los actores que se deben eliminar
 		for (Actor a : this.actoresParaEliminar) {
@@ -206,6 +217,14 @@ public class Arkanoid {
 	
 	public void eliminaActor (Actor a) {
 		this.actoresParaEliminar.add(a);
+	}
+	
+	/**
+	 * Método llamado para incorporar nuevos actores
+	 * @param a
+	 */
+	public void incorporaNuevoActor (Actor a) {
+		this.actoresParaIncorporar.add(a);
 	}
 	
 	public MiCanvas getCanvas() {

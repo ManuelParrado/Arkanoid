@@ -6,9 +6,9 @@ import java.awt.image.BufferedImage;
 public class Ladrillo extends Actor{
 	
 	private int espaciado = 3;
-	private static String color[] = new String[] {ImagesCache.IMAGEN_LADRILLO_AMARILLO, ImagesCache.IMAGEN_LADRILLO_CYAN, 
-			ImagesCache.IMAGEN_LADRILLO_MORADO, ImagesCache.IMAGEN_LADRILLO_ROJO, ImagesCache.IMAGEN_LADRILLO_ROSA,
-			ImagesCache.IMAGEN_LADRILLO_VERDE};
+	private static String color[] = new String[] {ResourcesCache.IMAGEN_LADRILLO_AMARILLO, ResourcesCache.IMAGEN_LADRILLO_CYAN, 
+			ResourcesCache.IMAGEN_LADRILLO_MORADO, ResourcesCache.IMAGEN_LADRILLO_ROJO, ResourcesCache.IMAGEN_LADRILLO_ROSA,
+			ResourcesCache.IMAGEN_LADRILLO_VERDE};
 	
 	
 
@@ -28,7 +28,8 @@ public class Ladrillo extends Actor{
 	 * @param alto
 	 */
 	public Ladrillo(int x, int y, int num_color, int ancho, int alto) {
-		super(x, y, ancho, alto, ImagesCache.getInstance().getImagen(color[num_color]));
+		super(x, y, ancho, alto);
+		this.setSpriteActual(ResourcesCache.getInstance().getImagen(color[num_color]));
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -86,6 +87,8 @@ public class Ladrillo extends Actor{
 		// Si colisionamos con un player o un disparo, eliminamos al monstruo
 		if (a instanceof Pelota) {
 			Arkanoid.getInstance().eliminaActor(this);
+			ResourcesCache.getInstance().playSonido("explosion.wav");
+			Arkanoid.getInstance().incorporaNuevoActor(new Explosion(this.x, this.y));
 		}
 	}
 	

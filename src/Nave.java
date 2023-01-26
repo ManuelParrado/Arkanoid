@@ -27,7 +27,8 @@ public class Nave extends Actor{
 	 * @param alto
 	 */
 	public Nave(int x, int y, int ancho, int alto) {
-		super(x, y, ancho, alto, ImagesCache.getInstance().getImagen(ImagesCache.IMAGEN_NAVE));
+		super(x, y, ancho, alto);
+		this.setSpriteActual(ResourcesCache.getInstance().getImagen(ResourcesCache.IMAGEN_NAVE));
 		// TODO Auto-generated constructor stub
 	}
 
@@ -77,6 +78,7 @@ public class Nave extends Actor{
 	
 	@Override
 	public void actua() {
+		super.actua();
 		
 		if (izquierda) this.x -= VELOCIDAD;
 		if (derecha) this.x += VELOCIDAD;
